@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User
 
@@ -25,3 +25,11 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please user a different email.')
+
+class RecordForm(FlaskForm):
+    artist = StringField('Artist', validators=[DataRequired()])
+    album = StringField('Album', validators=[DataRequired()])
+    year_released = IntegerField('Year Released', validators=[DataRequired()])
+    year_printed = IntegerField('Year Printed', validators=[DataRequired()])
+    condition = IntegerField('Condition', validators=[DataRequired()])
+    submit = SubmitField('Save')

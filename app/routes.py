@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, RecordForm
 from app.models import User, Record
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -56,6 +56,28 @@ def records():
 
 @app.route('/record/<id>')
 @login_required
-def record(id):
+def view_record(id):
     record = Record.query.filter_by(id=id).first_or_404()
     return render_template('view_record.html', record=record, title=record.album)
+
+@app.route('/record/<id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_record(id):
+    record = Record.query.filter_by(id=id).first_or_404()
+    form = RecordForm()
+    if form.validate_on_submit():
+        record.artist = form.artist.data
+        record.album = form.album.data
+        record.year_released = form.year_released.data
+        record.year_printed = form.year_printed.data
+        record.condition = form.condition.data
+        db.session.commit()
+        flash('Your record has been updated.')
+        return redirect(url_for('records'))
+    elif request.method == 'GET':
+        form.artist.data = record.artist
+        form.album.data = record.album
+        form.year_released.data = record.year_released
+        form.year_printed.data = record.year_printed
+        form.condition.data = record.condition
+    return render_template('edit_record.html', form=form, id=id, title='Edit')
