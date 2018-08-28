@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center my-5">
+        <div class="col-8 col-md-5">
+            <div class="row">
+                <div class="col-7">
+                    {% if user == current_user %}
+                    <div class="row pb-2">
+                        <div class="col-12">
+                            <a href="{{url_for('edit_profile')}}">Edit Profile</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row pb-2">
+                        <div class="col-4">
+                            <strong>Username:</strong>
+                        </div>
+                        <div class="col-8 text-right">
+                            {{user.username}}
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-5">
+                            <strong>Last Seen:</strong>
+                        </div>
+                        <div class="col-7 text-right">
+                            {{user.last_seen}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <img src="{{user.avatar(128)}}" class="rounded mx-auto d-block">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <strong>About Me:</strong>
+                </div>
+                <div class="col-12">{{user.about_me}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
