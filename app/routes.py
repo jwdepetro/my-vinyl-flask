@@ -53,3 +53,9 @@ def register():
 def records():
     records = Record.query.all()
     return render_template('records.html', records=records, title='Records')
+
+@app.route('/record/<id>')
+@login_required
+def record(id):
+    record = Record.query.filter_by(id=id).first_or_404()
+    return render_template('view_record.html', record=record, title=record.album)

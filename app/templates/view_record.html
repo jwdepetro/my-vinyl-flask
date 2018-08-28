@@ -1,0 +1,69 @@
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-8 col-md-5">
+            <h1>{{record.album}}</h1>
+            <p>
+                Edit | 
+                <a href="{{url_for('records')}}">Records</a>
+            </p>
+            <div class="row pb-2">
+                <div class="col-4">
+                    <strong>Artist:</strong>
+                </div>
+                <div class="col-8 text-right">
+                    {{record.artist}}
+                </div>
+            </div>
+            <div class="row pb-2">
+                <div class="col-4">
+                    <strong>Album:</strong>
+                </div>
+                <div class="col-8 text-right">
+                    {{record.album}}
+                </div>
+            </div>
+            <div class="row pb-2">
+                <div class="col-4">
+                    <strong>Year Released:</strong>
+                </div>
+                <div class="col-8 text-right">
+                    {{record.year_released}}
+                </div>
+            </div>
+            <div class="row pb-2">
+                <div class="col-4">
+                    <strong>Year Printed:</strong>
+                </div>
+                <div class="col-8 text-right">
+                    {{record.year_printed}}
+                </div>
+            </div>
+            <div class="row pb-2">
+                <div class="col-4">
+                    <strong>Condition:</strong>
+                </div>
+                <div class="col-8 text-right">
+                    {{record.condition}}
+                </div>
+            </div>
+    
+            <hr class="my-4">
+    
+            <p>
+                <strong>Tracks:</strong>
+            </p>
+    
+            ... tracks ...
+    
+            <p>
+                <strong>Add a track:</strong>
+            </p>
+    
+            ... track form ...
+        </div>
+    </div>
+</div>
+
+{% endblock %}

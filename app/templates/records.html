@@ -27,7 +27,7 @@
         <td>{{record.year_released}}</td>
         <td>{{record.year_printed}}</td>
         <td>{{record.condition}}</td>
-        <td>View</td>
+        <td><a href="{{url_for('record', id=record.id)}}">View</a></td>
         <td>Edit</td>
         <td>Delete</td>
     </tr>
