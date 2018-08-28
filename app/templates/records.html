@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1 class="display-3">Record Collection</h1>
+    <p class="lead">
+        This is a simple application where you can manage your record collection.
+    </p>
+    <hr class="my-4">
+</div>
+<table class="table">
+    <tr>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Year Released</th>
+        <th>Year Printed</th>
+        <th>Condition</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for record in records %}
+    <tr>
+        <td>{{record.artist}}</td>
+        <td>{{record.album}}</td>
+        <td>{{record.year_released}}</td>
+        <td>{{record.year_printed}}</td>
+        <td>{{record.condition}}</td>
+        <td>View</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

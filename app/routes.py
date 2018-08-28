@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import User, Record
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
@@ -47,3 +47,9 @@ def register():
         flash('Thanks for registering!')
         return redirect(url_for('login'))
     return render_template('register.html', form=form, title='Register')
+
+@app.route('/records')
+@login_required
+def records():
+    records = Record.query.all()
+    return render_template('records.html', records=records, title='Records')
