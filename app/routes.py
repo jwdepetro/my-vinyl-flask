@@ -16,7 +16,7 @@ def before_request():
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    return redirect(url_for('records'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
