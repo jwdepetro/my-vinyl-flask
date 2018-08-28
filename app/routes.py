@@ -81,3 +81,22 @@ def edit_record(id):
         form.year_printed.data = record.year_printed
         form.condition.data = record.condition
     return render_template('edit_record.html', form=form, id=id, title='Edit')
+
+@app.route('/record/create', methods=['GET', 'POST'])
+@login_required
+def create_record():
+    form = RecordForm()
+    if form.validate_on_submit():
+        record = Record(
+            artist=form.artist.data,
+            album=form.album.data,
+            year_released=form.year_released.data,
+            year_printed=form.year_printed.data,
+            condition=form.condition.data
+        )
+        db.session.add(record)
+        db.session.commit()
+        flash('Record created!')
+        return redirect(url_for('records'))
+    return render_template('create_record.html', form=form, title='Create')
+
