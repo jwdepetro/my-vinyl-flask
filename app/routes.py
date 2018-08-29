@@ -16,7 +16,8 @@ def before_request():
 @app.route('/index')
 @login_required
 def index():
-    return redirect(url_for('records'))
+    records = Record.query.filter_by(user_id=current_user.id)
+    return render_template('my-vinyl.html', records=records)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -84,7 +85,7 @@ def edit_profile():
 @app.route('/records')
 @login_required
 def records():
-    records = Record.query.filter_by(user_id=current_user.id)
+    records = Record.query.all()
     return render_template('records.html', records=records)
 
 @app.route('/record/<id>')
