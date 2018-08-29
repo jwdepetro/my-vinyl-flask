@@ -58,13 +58,13 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', user=user)
+    return render_template('user.html', user=user, title=user.username)
 
 @app.route('/users')
 @login_required
 def users():
     users = User.query.all()
-    return render_template('users.html', users=users)
+    return render_template('users.html', users=users, title='Community')
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -85,7 +85,7 @@ def edit_profile():
 @login_required
 def records():
     records = Record.query.filter_by(user_id=current_user.id)
-    return render_template('records.html', records=records, title='Records')
+    return render_template('records.html', records=records)
 
 @app.route('/record/<id>')
 @login_required
