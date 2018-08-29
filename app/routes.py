@@ -78,7 +78,7 @@ def edit_profile():
 @app.route('/records')
 @login_required
 def records():
-    records = Record.query.all()
+    records = Record.query.filter_by(user_id=current_user.id)
     return render_template('records.html', records=records, title='Records')
 
 @app.route('/record/<id>')
@@ -90,7 +90,7 @@ def view_record(id):
 @app.route('/record/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_record(id):
-    record = Record.query.filter_by(id=id).first_or_404()
+    record = Record.query.filter_by(id=id, user_id=current_user.id).first_or_404()
     form = RecordForm()
     if form.validate_on_submit():
         record.artist = form.artist.data
@@ -119,7 +119,8 @@ def create_record():
             album=form.album.data,
             year_released=form.year_released.data,
             year_printed=form.year_printed.data,
-            condition=form.condition.data
+            condition=form.condition.data,
+            user_id=current_user.id
         )
         db.session.add(record)
         db.session.commit()
