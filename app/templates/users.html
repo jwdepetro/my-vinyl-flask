@@ -19,7 +19,9 @@
                     {% if user.about_me %}
                     <p class="card-text">{{user.about_me}}</p>
                     {% endif %}
-                    <a href="{{url_for('user', username=user.username)}}" class="btn btn-primary">View Profile</a>
+                </div>
+                <div class="card-footer" style="background: transparent; border-top:none">
+                    <a href="{{url_for('user', username=user.username)}}" class="btn btn-primary btn-block">View Profile</a>
                 </div>
             </div>
         <!-- </div> -->

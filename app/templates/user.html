@@ -14,10 +14,12 @@
                     {% if user.about_me %}
                     <p class="card-text">{{user.about_me}}</p>
                     {% endif %}
-                    {% if user == current_user %}
-                    <a href="{{url_for('edit_profile')}}" class="btn btn-primary">Edit Profile</a>
-                    {% endif %}
                 </div>
+                {% if user == current_user %}
+                <div class="card-footer" style="background: transparent; border-top:none">
+                    <a href="{{url_for('edit_profile')}}" class="btn btn-primary btn-block">Edit Profile</a>
+                </div>
+                {% endif %}
             </div>
         </div>
         <div class="col-9">
