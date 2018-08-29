@@ -20,6 +20,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
+                    {% if not current_user.is_anonymous %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('users')}}">Community</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <ul class="navbar-nav">
                     {% if current_user.is_anonymous %}
