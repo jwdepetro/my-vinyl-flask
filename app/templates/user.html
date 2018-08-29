@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{user.username}}</h5>
                     <p class="card-text">
-                        Last Seen: {{user.last_seen}}
+                        Last Seen: {{moment(user.last_seen).format('L')}}
                     </p>
                     {% if user.about_me %}
                     <p class="card-text">{{user.about_me}}</p>
