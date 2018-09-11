@@ -1,15 +1,19 @@
-from app import db, login
-from datetime import datetime, timedelta
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-from hashlib import md5
-from flask import url_for
 import base64
 import os
+from datetime import datetime, timedelta
+from hashlib import md5
+
+from flask import url_for
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from app import db, login
+
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
 
 class PaginatedAPIMixin(object):
     @staticmethod
@@ -34,6 +38,7 @@ class PaginatedAPIMixin(object):
         }
         return data
 
+
 class User(PaginatedAPIMixin, UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -53,12 +58,12 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
     def avatar(self, per_page):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, per_page)
-    
+
     def to_dict(self, include_email=False):
         data = {
             'id': self.id,
@@ -75,7 +80,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         if include_email:
             data['email'] = self.email
         return data
-    
+
     def from_dict(self, data, new_user=False):
         for field in ['username', 'email', 'about_me']:
             if field in data:
@@ -91,7 +96,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         self.token_expiration = now + timedelta(seconds=expires_in)
         db.session.add(self)
         return self.token
-    
+
     def revoke_token(self):
         self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
 
@@ -101,6 +106,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
+
 
 class Record(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -130,6 +136,7 @@ class Record(PaginatedAPIMixin, db.Model):
             }
         }
         return data
+
 
 class Tracks(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -21,7 +21,8 @@
                     <span>{{error}}</span>
                     {% endfor %}
                 </div>
-                <p class="text-center">{{form.remember_me(class="form-check-input")}} {{form.remember_me.label(class="form-check-label")}}</p>
+                <p class="text-center">{{form.remember_me(class="form-check-input")}}
+                    {{form.remember_me.label(class="form-check-label")}}</p>
                 <p>{{form.submit(class="btn btn-primary btn-block")}}</p>
             </form>
             <p class="text-center">New User? <a href="{{ url_for('register') }}">Register Here</a></p>

@@ -27,15 +27,15 @@
                     {% for error in form.password.errors %}
                     <span>{{error}}</span>
                     {% endfor %}
-                </p>
-                <div class="form-group">
-                    {{form.confirm_password.label}}
-                    {{form.confirm_password(size=32, class="form-control")}}
-                    {% for error in form.confirm_password.errors %}
-                    <span>{{error}}</span>
-                    {% endfor %}
-                </div>
-                <p>{{form.submit(class="btn btn-primary btn-block")}}</p>
+                    </p>
+                    <div class="form-group">
+                        {{form.confirm_password.label}}
+                        {{form.confirm_password(size=32, class="form-control")}}
+                        {% for error in form.confirm_password.errors %}
+                        <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                    <p>{{form.submit(class="btn btn-primary btn-block")}}</p>
             </form>
         </div>
     </div>

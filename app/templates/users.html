@@ -12,20 +12,20 @@
         {% for user in users %}
 
         <!-- <div class="col align-items-center"> -->
-            <div class="card m-2" style="width: 18rem;">
-                <img class="card-img-top" src="{{user.avatar(500)}}">
-                <div class="card-body">
-                    <h5 class="card-title">{{user.username}}</h5>
-                    {% if user.about_me %}
-                    <p class="card-text">{{user.about_me}}</p>
-                    {% endif %}
-                </div>
-                <div class="card-footer" style="background: transparent; border-top:none">
-                    <a href="{{url_for('user', username=user.username)}}" class="btn btn-primary btn-block">View Profile</a>
-                </div>
+        <div class="card m-2" style="width: 18rem;">
+            <img class="card-img-top" src="{{user.avatar(500)}}">
+            <div class="card-body">
+                <h5 class="card-title">{{user.username}}</h5>
+                {% if user.about_me %}
+                <p class="card-text">{{user.about_me}}</p>
+                {% endif %}
             </div>
+            <div class="card-footer" style="background: transparent; border-top:none">
+                <a href="{{url_for('user', username=user.username)}}" class="btn btn-primary btn-block">View Profile</a>
+            </div>
+        </div>
         <!-- </div> -->
-        
+
         {% endfor %}
     </div>
 </div>
