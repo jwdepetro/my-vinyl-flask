@@ -8,6 +8,8 @@ This is a basic application to manage individual user's record collections.
 
 `pip install -r requirements.txt` 
 
+`flask db upgrade`
+
 ## Running
 
 `flask run`
