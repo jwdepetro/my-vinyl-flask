@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import requests
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -148,3 +149,19 @@ def create_record():
         flash('Record created!')
         return redirect(url_for('records'))
     return render_template('create_record.html', form=form, title='Create')
+
+
+@app.route('/search', methods=['GET'])
+@login_required
+def search():
+    data = {}
+    q = request.args.get('q')
+    if q is not None and q != '':
+        r = requests.get(
+            'http://ws.audioscrobbler.com/2.0/'
+            '?method=album.search'
+            '&album=' + q +
+            '&api_key=' + app.config['LAST_API_KEY'] +
+            '&format=json')
+        data = r.json()
+    return render_template('search.html', data=data, q=q)

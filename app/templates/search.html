@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <div class="row justify-content-center">
+        <div class="col col-md-4">
+            <h1 class="lead">
+                {% if data.results %}
+                {{data.results['opensearch:totalResults']}} Records Found
+                {% else %}
+                Search for an album...
+                {% endif %}
+            </h1>
+        </div>
+        <div class="col col-md-4">
+            <form action="" method="get">
+                <div class="input-group">
+                    <input type="text" name="q" value="{{q}}"
+                           class="form-control form-control-lg">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="row d-flex justify-content-center">
+        {% if data.results %}
+        {% for rec in data.results.albummatches.album %}
+
+        <div class="card m-2" style="width: 12rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{rec.name}}</h5>
+                <p class="card-text">{{rec.artist}}</p>
+            </div>
+            <div class="card-footer" style="background: transparent; border-top:none">
+                <a class="btn btn-primary btn-block">View</a>
+            </div>
+        </div>
+
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
