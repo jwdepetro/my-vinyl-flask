@@ -32,6 +32,9 @@
         {% for rec in data.results.albummatches.album %}
 
         <div class="card m-2" style="width: 12rem;">
+            {% if rec.image[2]['#text'] %}
+            <img class="card-img-top" src="{{rec.image[2]['#text']}}">
+            {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{rec.name}}</h5>
                 <p class="card-text">{{rec.artist}}</p>
