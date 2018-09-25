@@ -38,6 +38,15 @@
                     </form>
                 </div>
             </div>
+            {% if data.album.tags.tag %}
+            <div class="row mb-3">
+                <div class="col">
+                    {% for tag in data.album.tags.tag %}
+                    <span class="badge badge-secondary">{{tag.name}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
             {% if data.album.wiki %}
             <div class="row">
                 <div class="col">

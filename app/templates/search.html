@@ -9,7 +9,7 @@
                 {% if data.results %}
                 {{data.results['opensearch:totalResults']}} Records Found
                 {% else %}
-                Search for an album...
+                Search for an album or <a href="{{url_for('create_record')}}">manually add one</a>
                 {% endif %}
             </h1>
         </div>
