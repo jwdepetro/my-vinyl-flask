@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container my-3">
+    <div class="row d-flex justify-content-center">
+        <div class="col col-md-4">
+            {% if data.album.image[3]['#text'] %}
+            <p>
+                <img class="card-img-top" src="{{data.album.image[3]['#text']}}">
+            </p>
+            {% endif %}
+            <ul class="list-group">
+                {% for track in data.album.tracks.track %}
+                <li class="list-group-item">
+                    {{track['@attr'].rank}}. {{track.name}}
+                    ({{track.duration}})
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col col-md-8">
+            <h1 class="display-4">
+                {{data.album.name}}
+            </h1>
+            <p class="lead">
+                {{data.album.artist}}
+            </p>
+            <p>
+                Released: {{data.album.wiki.published}}
+            </p>
+            <p>
+                {{data.album.wiki.content}}
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

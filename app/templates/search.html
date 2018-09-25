@@ -40,7 +40,7 @@
                 <p class="card-text">{{rec.artist}}</p>
             </div>
             <div class="card-footer" style="background: transparent; border-top:none">
-                <a class="btn btn-primary btn-block">View</a>
+                <a href="{{url_for('search_detail', mbid=rec.mbid)}}" class="btn btn-primary btn-block">View</a>
             </div>
         </div>
 

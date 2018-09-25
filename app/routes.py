@@ -162,6 +162,20 @@ def search():
             '?method=album.search'
             '&album=' + q +
             '&api_key=' + app.config['LAST_API_KEY'] +
-            '&format=json')
+            '&format=json'
+        )
         data = r.json()
     return render_template('search.html', data=data, q=q)
+
+
+@app.route('/search/detail/<mbid>', methods=['GET'])
+@login_required
+def search_detail(mbid):
+    r = requests.get(
+        'http://ws.audioscrobbler.com/2.0/'
+        '?method=album.getinfo'
+        '&mbid=' + mbid +
+        '&api_key=' + app.config['LAST_API_KEY'] +
+        '&format=json'
+    )
+    return render_template('search_detail.html', data=r.json())
