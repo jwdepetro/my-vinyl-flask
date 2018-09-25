@@ -160,8 +160,9 @@ def create_record():
         data = r.json()
         form.album.data = data['album']['name']
         form.artist.data = data['album']['artist']
-        if data['album']['wiki'] is not None:
-            form.year_released.data = datetime.strptime(data['album']['wiki']['published'], '%d %b %Y, %H:%M').year
+        if data.get('album').get('wiki') is not None:
+            form.year_released.data = datetime.strptime(data.get('album').get('wiki').get('published'),
+                                                        '%d %b %Y, %H:%M').year
 
     return render_template('create_record.html', form=form, title='Create')
 
