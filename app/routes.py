@@ -148,6 +148,21 @@ def create_record():
         db.session.commit()
         flash('Record created!')
         return redirect(url_for('records'))
+    mbid = request.args.get('mbid')
+    if mbid is not None:
+        r = requests.get(
+            'http://ws.audioscrobbler.com/2.0/'
+            '?method=album.getinfo'
+            '&mbid=' + mbid +
+            '&api_key=' + app.config['LAST_API_KEY'] +
+            '&format=json'
+        )
+        data = r.json()
+        form.album.data = data['album']['name']
+        form.artist.data = data['album']['artist']
+        if data['album']['wiki'] is not None:
+            form.year_released.data = datetime.strptime(data['album']['wiki']['published'], '%d %b %Y, %H:%M').year
+
     return render_template('create_record.html', form=form, title='Create')
 
 

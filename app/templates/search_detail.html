@@ -20,18 +20,32 @@
             </ul>
         </div>
         <div class="col col-md-8">
-            <h1 class="display-4">
-                {{data.album.name}}
-            </h1>
-            <p class="lead">
-                {{data.album.artist}}
-            </p>
-            <p>
-                Released: {{data.album.wiki.published}}
-            </p>
-            <p>
-                {{data.album.wiki.content}}
-            </p>
+            <div class="row">
+                <div class="col-8">
+                    <h1 class="display-4">
+                        {{data.album.name}}
+                    </h1>
+                    <p class="lead">
+                        {{data.album.artist}}
+                    </p>
+                </div>
+                <div class="col-4 align-self-center">
+                    <form action="{{url_for('create_record')}}" method="get">
+                        <input type="hidden" name="mbid" value="{{data.album.mbid}}">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Add to Collection
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% if data.album.wiki %}
+            <div class="row">
+                <div class="col">
+                    <p>Released: {{data.album.wiki.published}}</p>
+                    <p>{{data.album.wiki.content}}</p>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
