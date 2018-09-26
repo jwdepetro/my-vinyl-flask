@@ -217,13 +217,25 @@ def send_message(recipient):
 def messages():
     current_user.last_message_read_time = datetime.utcnow()
     db.session.commit()
-    page = request.args.get('page', 1, type=int)
-    messages = current_user.messages_received.order_by(
+
+    outbox_page = request.args.get('outbox_page', 1, type=int)
+    outbox = current_user.messages_sent.order_by(
         Message.timestamp.desc()).paginate(
-        page, 10, False)
-    next_url = url_for('messages', page=messages.next_num) \
-        if messages.has_next else None
-    prev_url = url_for('messages', page=messages.prev_num) \
-        if messages.has_prev else None
-    return render_template('messages.html', messages=messages.items,
-                           next_url=next_url, prev_url=prev_url)
+        outbox_page, 10, False)
+    outbox_next_url = url_for('messages', outbox_page=outbox.next_num) \
+        if outbox.has_next else None
+    outbox_prev_url = url_for('messages', outbox_page=outbox.prev_num) \
+        if outbox.has_prev else None
+
+    inbox_page = request.args.get('inbox_page', 1, type=int)
+    inbox = current_user.messages_received.order_by(
+        Message.timestamp.desc()).paginate(
+        inbox_page, 10, False)
+    inbox_next_url = url_for('messages', inbox_page=inbox.next_num) \
+        if inbox.has_next else None
+    inbox_prev_url = url_for('messages', inbox_page=inbox.prev_num) \
+        if inbox.has_prev else None
+
+    return render_template('messages.html', inbox=inbox.items, outbox=outbox.items,
+                           inbox_next_url=inbox_next_url, inbox_prev_url=inbox_prev_url,
+                           outbox_next_url=outbox_next_url, outbox_prev_url=outbox_prev_url)
