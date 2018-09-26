@@ -49,6 +49,15 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     records = db.relationship('Record', backref='user', lazy='dynamic')
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
+    last_message_read_time = db.Column(db.DateTime)
+
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='author', lazy='dynamic')
+
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='recipient', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -107,6 +116,11 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
             return None
         return user
 
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return Message.query.filter_by(recipient=self).filter(
+            Message.timestamp > last_read_time).count()
+
 
 class Record(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -146,3 +160,14 @@ class Tracks(db.Model):
 
     def __repr__(self):
         return '<Track Name={}>'.format(self.track)
+
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Message {}>'.format(self.body)

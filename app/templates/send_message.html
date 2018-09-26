@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <p class="lead">
+        Send a note to {{recipient}}
+    </p>
+</div>
+<div class="container h-100">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <div class="card">
+                <form action="" method="POST">
+                    {{form.hidden_tag()}}
+                    <div class="card-body">
+                        <div class="form-group">
+                            {{form.message.label}}
+                            {{form.message(size=140, class="form-control")}}
+                            {% for error in form.message.errors %}
+                            <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-footer" style="background: transparent; border-top:none">
+                        {{form.submit(class="btn btn-primary btn-block")}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

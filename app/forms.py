@@ -53,3 +53,8 @@ class RecordForm(FlaskForm):
     year_printed = IntegerField('Year Printed', validators=[DataRequired()])
     condition = IntegerField('Condition', validators=[DataRequired()])
     submit = SubmitField('Save')
+
+
+class MessageForm(FlaskForm):
+    message = TextAreaField('Message', validators=[DataRequired(), Length(min=0, max=1000)])
+    submit = SubmitField('Submit')

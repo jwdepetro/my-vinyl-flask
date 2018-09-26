@@ -15,11 +15,17 @@
                     <p class="card-text">{{user.about_me}}</p>
                     {% endif %}
                 </div>
-                {% if user == current_user %}
                 <div class="card-footer" style="background: transparent; border-top:none">
-                    <a href="{{url_for('edit_profile')}}" class="btn btn-primary btn-block">Edit Profile</a>
+                    {% if user == current_user %}
+                    <a href="{{url_for('edit_profile')}}" class="btn btn-primary btn-block">
+                        Edit Profile
+                    </a>
+                    {% else %}
+                    <a href="{{url_for('send_message', recipient=user.username)}}" class="btn btn-primary btn-block">
+                        Send Message
+                    </a>
+                    {% endif %}
                 </div>
-                {% endif %}
             </div>
         </div>
         <div class="col-9">
