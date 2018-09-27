@@ -105,7 +105,17 @@ def records():
 @login_required
 def view_record(id):
     record = Record.query.filter_by(id=id).first_or_404()
-    return render_template('view_record.html', record=record, title=record.album)
+    data = {}
+    if record.mbid:
+        r = requests.get(
+            'http://ws.audioscrobbler.com/2.0/'
+            '?method=album.getinfo'
+            '&mbid=' + record.mbid +
+            '&api_key=' + app.config['LAST_API_KEY'] +
+            '&format=json'
+        )
+        data = r.json()
+    return render_template('view_record.html', record=record, data=data, title=record.album)
 
 
 @app.route('/record/<id>/edit', methods=['GET', 'POST'])
@@ -134,6 +144,7 @@ def edit_record(id):
 @app.route('/record/create', methods=['GET', 'POST'])
 @login_required
 def create_record():
+    mbid = request.args.get('mbid')
     form = RecordForm()
     if form.validate_on_submit():
         record = Record(
@@ -142,13 +153,13 @@ def create_record():
             year_released=form.year_released.data,
             year_printed=form.year_printed.data,
             condition=form.condition.data,
-            user_id=current_user.id
+            user_id=current_user.id,
+            mbid=mbid
         )
         db.session.add(record)
         db.session.commit()
         flash('Record created!')
         return redirect(url_for('records'))
-    mbid = request.args.get('mbid')
     if mbid is not None:
         r = requests.get(
             'http://ws.audioscrobbler.com/2.0/'
@@ -161,7 +172,7 @@ def create_record():
         form.album.data = data['album']['name']
         form.artist.data = data['album']['artist']
 
-    return render_template('create_record.html', form=form, title='Create')
+    return render_template('create_record.html', form=form, mbid=mbid, title='Create')
 
 
 @app.route('/search', methods=['GET'])
@@ -169,7 +180,7 @@ def create_record():
 def search():
     data = {}
     q = request.args.get('q')
-    if q is not None and q != '':
+    if q :
         r = requests.get(
             'http://ws.audioscrobbler.com/2.0/'
             '?method=album.search'
@@ -178,6 +189,8 @@ def search():
             '&format=json'
         )
         data = r.json()
+    else:
+        q = ''
     return render_template('search.html', data=data, q=q)
 
 
@@ -239,3 +252,5 @@ def messages():
     return render_template('messages.html', inbox=inbox.items, outbox=outbox.items,
                            inbox_next_url=inbox_next_url, inbox_prev_url=inbox_prev_url,
                            outbox_next_url=outbox_next_url, outbox_prev_url=outbox_prev_url)
+
+

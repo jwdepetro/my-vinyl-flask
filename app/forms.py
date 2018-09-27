@@ -57,4 +57,4 @@ class RecordForm(FlaskForm):
 
 class MessageForm(FlaskForm):
     message = TextAreaField('Message', validators=[DataRequired(), Length(min=0, max=1000)])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Send')
