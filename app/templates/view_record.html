@@ -9,53 +9,30 @@
         </div>
         {% endif %}
         <div class="col-12 col-md-8">
-            <h1>{{record.album}}</h1>
+            <div class="row">
+                <div class="col-8">
+                    <h1 class="display-4">
+                        {{record.album}}
+                    </h1>
+                    <p class="lead">
+                        {{record.artist}}
+                    </p>
+                </div>
+                <div class="col-4 align-self-center">
+                    <p>
+                        <strong>Added:</strong> {{moment(record.timestamp).format('l')}}<br>
+                        <strong>Year Released:</strong> {{record.year_released}}<br>
+                        <strong>Year Printed:</strong> {{record.year_printed}}<br>
+                        <strong>Condition:</strong> {{record.condition}}
+                    </p>
+                </div>
+            </div>
             <p>
                 {% if record.user_id == current_user.id %}
                 <a href="{{url_for('edit_record', id=record.id)}}">Edit</a> |
                 {% endif %}
                 <a href="{{url_for('records')}}">Records</a>
             </p>
-            <div class="row pb-2">
-                <div class="col-4">
-                    <strong>Artist:</strong>
-                </div>
-                <div class="col-8 text-right">
-                    {{record.artist}}
-                </div>
-            </div>
-            <div class="row pb-2">
-                <div class="col-4">
-                    <strong>Album:</strong>
-                </div>
-                <div class="col-8 text-right">
-                    {{record.album}}
-                </div>
-            </div>
-            <div class="row pb-2">
-                <div class="col-4">
-                    <strong>Year Released:</strong>
-                </div>
-                <div class="col-8 text-right">
-                    {{record.year_released}}
-                </div>
-            </div>
-            <div class="row pb-2">
-                <div class="col-4">
-                    <strong>Year Printed:</strong>
-                </div>
-                <div class="col-8 text-right">
-                    {{record.year_printed}}
-                </div>
-            </div>
-            <div class="row pb-2">
-                <div class="col-4">
-                    <strong>Condition:</strong>
-                </div>
-                <div class="col-8 text-right">
-                    {{record.condition}}
-                </div>
-            </div>
 
             {% if not data %}
 
@@ -75,9 +52,11 @@
 
             {% else %}
 
+            <p>{% include "partial/_api_record_tags.html" %}
+            <p>
+                {% include "partial/_api_record_wiki.html" %}
 
-
-            {% endif %}
+                {% endif %}
         </div>
     </div>
 </div>

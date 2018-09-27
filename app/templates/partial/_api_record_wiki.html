@@ -1,34 +1,3 @@
-<div class="row">
-    <div class="col-8">
-        <h1 class="display-4">
-            {{data.album.name}}
-        </h1>
-        <p class="lead">
-            {{data.album.artist}}
-        </p>
-    </div>
-    <div class="col-4 align-self-center">
-        <form action="{{url_for('create_record')}}" method="get">
-            <input type="hidden" name="mbid" value="{{data.album.mbid}}">
-            <button type="submit" class="btn btn-primary btn-lg">
-                Add to Collection
-            </button>
-        </form>
-    </div>
-</div>
-{% if data.album.tags.tag %}
-<div class="row mb-3">
-    <div class="col">
-        {% for tag in data.album.tags.tag %}
-        <span class="badge badge-secondary">{{tag.name}}</span>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
 {% if data.album.wiki %}
-<div class="row">
-    <div class="col">
-        <p>{{data.album.wiki.content}}</p>
-    </div>
-</div>
+<p>{{data.album.wiki.content}}</p>
 {% endif %}

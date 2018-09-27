@@ -1,0 +1,5 @@
+{% if data.album.tags.tag %}
+{% for tag in data.album.tags.tag %}
+<span class="badge badge-secondary">{{tag.name}}</span>
+{% endfor %}
+{% endif %}
