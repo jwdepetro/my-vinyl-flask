@@ -5,55 +5,10 @@
 <div class="container my-3">
     <div class="row d-flex justify-content-center">
         <div class="col col-md-4">
-            {% if data.album.image[3]['#text'] %}
-            <p>
-                <img class="card-img-top" src="{{data.album.image[3]['#text']}}">
-            </p>
-            {% endif %}
-            <ul class="list-group">
-                {% for track in data.album.tracks.track %}
-                <li class="list-group-item">
-                    {{track['@attr'].rank}}. {{track.name}}
-                    ({{track.duration}})
-                </li>
-                {% endfor %}
-            </ul>
+            {% include "partial/_api_record.html" %}
         </div>
         <div class="col col-md-8">
-            <div class="row">
-                <div class="col-8">
-                    <h1 class="display-4">
-                        {{data.album.name}}
-                    </h1>
-                    <p class="lead">
-                        {{data.album.artist}}
-                    </p>
-                </div>
-                <div class="col-4 align-self-center">
-                    <form action="{{url_for('create_record')}}" method="get">
-                        <input type="hidden" name="mbid" value="{{data.album.mbid}}">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Add to Collection
-                        </button>
-                    </form>
-                </div>
-            </div>
-            {% if data.album.tags.tag %}
-            <div class="row mb-3">
-                <div class="col">
-                    {% for tag in data.album.tags.tag %}
-                    <span class="badge badge-secondary">{{tag.name}}</span>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-            {% if data.album.wiki %}
-            <div class="row">
-                <div class="col">
-                    <p>{{data.album.wiki.content}}</p>
-                </div>
-            </div>
-            {% endif %}
+            {% include "partial/_api_record_wiki.html" %}
         </div>
     </div>
 </div>

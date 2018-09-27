@@ -1,0 +1,13 @@
+{% if data.album.image[3]['#text'] %}
+<p>
+    <img class="card-img-top" src="{{data.album.image[3]['#text']}}">
+</p>
+{% endif %}
+<ul class="list-group">
+    {% for track in data.album.tracks.track %}
+    <li class="list-group-item">
+        {{track['@attr'].rank}}. {{track.name}}
+        ({{track.duration}})
+    </li>
+    {% endfor %}
+</ul>

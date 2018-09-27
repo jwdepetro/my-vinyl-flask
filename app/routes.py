@@ -145,7 +145,20 @@ def edit_record(id):
 @login_required
 def create_record():
     mbid = request.args.get('mbid')
+    data = None
     form = RecordForm()
+    if mbid:
+        r = requests.get(
+            'http://ws.audioscrobbler.com/2.0/'
+            '?method=album.getinfo'
+            '&mbid=' + mbid +
+            '&api_key=' + app.config['LAST_API_KEY'] +
+            '&format=json'
+        )
+        data = r.json()
+        form.album.data = data['album']['name']
+        form.artist.data = data['album']['artist']
+
     if form.validate_on_submit():
         record = Record(
             artist=form.artist.data,
@@ -160,19 +173,8 @@ def create_record():
         db.session.commit()
         flash('Record created!')
         return redirect(url_for('records'))
-    if mbid is not None:
-        r = requests.get(
-            'http://ws.audioscrobbler.com/2.0/'
-            '?method=album.getinfo'
-            '&mbid=' + mbid +
-            '&api_key=' + app.config['LAST_API_KEY'] +
-            '&format=json'
-        )
-        data = r.json()
-        form.album.data = data['album']['name']
-        form.artist.data = data['album']['artist']
 
-    return render_template('create_record.html', form=form, mbid=mbid, title='Create')
+    return render_template('create_record.html', form=form, data=data, title='Create')
 
 
 @app.route('/search', methods=['GET'])
@@ -180,7 +182,7 @@ def create_record():
 def search():
     data = {}
     q = request.args.get('q')
-    if q :
+    if q:
         r = requests.get(
             'http://ws.audioscrobbler.com/2.0/'
             '?method=album.search'
@@ -252,5 +254,3 @@ def messages():
     return render_template('messages.html', inbox=inbox.items, outbox=outbox.items,
                            inbox_next_url=inbox_next_url, inbox_prev_url=inbox_prev_url,
                            outbox_next_url=outbox_next_url, outbox_prev_url=outbox_prev_url)
-
-

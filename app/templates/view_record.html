@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="container">
+<div class="container my-3">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-5">
+        {% if data %}
+        <div class="col-12 col-md-4">
+            {% include "partial/_api_record.html" %}
+        </div>
+        {% endif %}
+        <div class="col-12 col-md-8">
             <h1>{{record.album}}</h1>
             <p>
                 {% if record.user_id == current_user.id %}
@@ -53,6 +57,8 @@
                 </div>
             </div>
 
+            {% if not data %}
+
             <hr class="my-4">
 
             <p>
@@ -66,9 +72,12 @@
             </p>
 
             ... track form ...
-        </div>
-        <div class="col-12 col-md-7">
-            {{data}}
+
+            {% else %}
+
+
+
+            {% endif %}
         </div>
     </div>
 </div>
