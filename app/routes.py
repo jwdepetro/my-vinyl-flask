@@ -1,10 +1,8 @@
-from datetime import datetime
-
 import requests
+from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, RecordForm, ProfileForm, MessageForm
 from app.models import User, Record, Message
@@ -121,7 +119,8 @@ def view_record(id):
 @app.route('/record/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_record(id):
-    record = Record.query.filter_by(id=id, user_id=current_user.id).first_or_404()
+    record = Record.query.filter_by(
+        id=id, user_id=current_user.id).first_or_404()
     form = RecordForm()
     if form.validate_on_submit():
         record.artist = form.artist.data
