@@ -17,3 +17,5 @@ build/
 .vscode/
 
 app.db
+
+.env
