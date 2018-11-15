@@ -1,0 +1,11 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+        "Name": "jwdepetro/my-vinyl-flask"
+    },
+    "Ports": [
+        {
+            "ContainerPort": 5090
+        }
+    ]
+}
