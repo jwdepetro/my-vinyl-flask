@@ -1,0 +1,7 @@
+conf.d
+docker-compose.yml
+Dockerfile
+Dockerrun.aws.json
+.idea
+.vscode
+.env
