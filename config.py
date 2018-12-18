@@ -21,4 +21,6 @@ class Config(object):
     ADMINS = ['jwdepetro@gmail.com']
 
     # Last.fm API
+    LAST_API_URL = os.environ.get('LAST_API_URL')
     LAST_API_KEY = os.environ.get('LAST_API_KEY')
+    LAST_API_SECRET = os.environ.get('LAST_API_SECRET')
